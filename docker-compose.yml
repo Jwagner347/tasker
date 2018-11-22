@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  mysql:
+    build: .
+    container_name: mysql-db
+    image: mysql-tasker
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: tasker
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test

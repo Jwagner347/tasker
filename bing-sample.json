@@ -1,0 +1,87 @@
+{
+    "authenticationResultCode": "ValidCredentials",
+    "brandLogoUri": "http://dev.virtualearth.net/Branding/logo_powered_by.png",
+    "copyright": "Copyright © 2018 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.",
+    "resourceSets": [
+        {
+            "estimatedTotal": 1,
+            "resources": [
+                {
+                    "__type": "DistanceMatrix:http://schemas.microsoft.com/search/local/ws/rest/v1",
+                    "destinations": [
+                        {
+                            "latitude": 45.5347,
+                            "longitude": -122.6231
+                        },
+                        {
+                            "latitude": 47.4747,
+                            "longitude": -122.2057
+                        }
+                    ],
+                    "errorMessage": "Request accepted.",
+                    "origins": [
+                        {
+                            "latitude": 47.6044,
+                            "longitude": -122.3345
+                        },
+                        {
+                            "latitude": 47.6731,
+                            "longitude": -122.1185
+                        },
+                        {
+                            "latitude": 47.6149,
+                            "longitude": -122.1936
+                        }
+                    ],
+                    "results": [
+                        {
+                            "destinationIndex": 0,
+                            "originIndex": 0,
+                            "totalWalkDuration": 0,
+                            "travelDistance": 280.994,
+                            "travelDuration": 158.968
+                        },
+                        {
+                            "destinationIndex": 1,
+                            "originIndex": 0,
+                            "totalWalkDuration": 0,
+                            "travelDistance": 23.003,
+                            "travelDuration": 15.15
+                        },
+                        {
+                            "destinationIndex": 0,
+                            "originIndex": 1,
+                            "totalWalkDuration": 0,
+                            "travelDistance": 295.687,
+                            "travelDuration": 169.077
+                        },
+                        {
+                            "destinationIndex": 1,
+                            "originIndex": 1,
+                            "totalWalkDuration": 0,
+                            "travelDistance": 28.443,
+                            "travelDuration": 19.16
+                        },
+                        {
+                            "destinationIndex": 0,
+                            "originIndex": 2,
+                            "totalWalkDuration": 0,
+                            "travelDistance": 284.915,
+                            "travelDuration": 162.423
+                        },
+                        {
+                            "destinationIndex": 1,
+                            "originIndex": 2,
+                            "totalWalkDuration": 0,
+                            "travelDistance": 17.708,
+                            "travelDuration": 12.498
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "statusCode": 200,
+    "statusDescription": "OK",
+    "traceId": "a32692df74c74947ad84a64408a58a56|CH1B9645AC|7.7.0.0"
+}
