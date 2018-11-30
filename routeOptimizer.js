@@ -1,5 +1,4 @@
-// takes an object of {origin: [lat, long], destinations: [[lat, long], [lat, long]] OR destinations: { 1: [lat, long], 2: [lat, long]}
-// makes a request to bing maps for best route
+
 // returns the order of destinations to take
 
 // eventually, will take into consideration how long each leg takes so that it can chop it off
@@ -10,46 +9,71 @@
 const request = require('request-promise');
 const key = require('./secrets')['api-key'];
 
-let sampleOrigins = [[47.6044,-122.3345],[47.6731,-122.1185],[47.6149,-122.1936]];
-let sampleDestinations = [[45.5347,-122.6231],[47.4747,-122.2057]];
-
 let latLongReducer = (arrOfLatLong) => {
-    let arrOfLatLongLength = arrOfLatLong.length;
-    return arrOfLatLong.reduce((acc, curr, currIndex) => {
-        
-        if (arrOfLatLongLength === currIndex + 1) {
-            return acc + curr.join(',');    
-        } else {
-            return acc + curr.join(',') + ';';
-        }
-    }, '');
+  let arrOfLatLongLength = arrOfLatLong.length;
+  return arrOfLatLong.reduce((acc, curr, currIndex) => {
+    if (arrOfLatLongLength === currIndex + 1) {
+        return acc + curr.join(',');
+    } else {
+        return acc + curr.join(',') + ';';
+    }
+  }, '');
 };
 
 
 let routeOptimizer = ({ origins = [], destinations = [] } = {}) => {
-    let latLongOrigins = latLongReducer(origins);
-    let latLongDestinations = latLongReducer(destinations);
-    
-    let options = {
-        uri: 'https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins',
-        qs: {
-            key,
-            origins: latLongOrigins,
-            destinations: latLongDestinations,
-            travelMode: 'driving'
-        },
-        json: true
-    };
+  let latLongOrigins = origins;
+  let latLongDestinations = destinations;
+  let numOfDestinations = latLongDestinations.length;
+  let optimizedDestinations = [];
 
-    request(options)
-        .then((result) => {
-            console.log(result.resourceSets[0].resources);
-            
-        })
-        .catch((err) => {
-            console.error(err);
-            
-        });
+  let options = {
+      uri: 'https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix',
+      qs: {
+          key,
+          origins: '',
+          destinations: '',
+          travelMode: 'driving'
+      },
+      json: true
+  };
+
+  let getOptimizedRoutes = () => {
+    let latLongOriginsString = latLongReducer(latLongOrigins);
+    let latLongDestinationsString = latLongReducer(latLongDestinations);
+
+    options.qs.origins = latLongOriginsString;
+    options.qs.destinations = latLongDestinationsString;
+
+    return request(options)
+      .then((result) => {
+        let routeResults = result.resourceSets[0].resources[0].results;
+        let nextDestinationIndex;
+        let nextDestination;
+
+        nextDestinationIndex = routeResults.sort((a, b) => {
+            return a.travelDuration > b.travelDuration;
+        })[0].destinationIndex;
+
+        nextDestination = latLongDestinations.splice(nextDestinationIndex, 1);
+        optimizedDestinations.push(nextDestination);
+
+        latLongOrigins = nextDestination;
+
+        while (optimizedDestinations.length < numOfDestinations) {
+          return getOptimizedRoutes();
+        }
+
+        return optimizedDestinations;
+      })
+      .catch((err) => {
+          console.error(err);
+      });
+  };
+
+  return getOptimizedRoutes(options);
 };
 
-routeOptimizer({origins: sampleOrigins, destinations: sampleDestinations});
+module.exports = {
+    routeOptimizer: routeOptimizer
+};
