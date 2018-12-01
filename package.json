@@ -4,11 +4,14 @@
   "description": "",
   "main": "tasker.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "swagger": "^0.7.5"
