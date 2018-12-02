@@ -15,6 +15,10 @@ app.get('/routes/optimized', (req, res) => {
   routesController.optimizedRoutes(req, res);
 });
 
+app.post('/tasks/new', (req, res) => {
+  tasksController.create(req, res);
+});
+
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });

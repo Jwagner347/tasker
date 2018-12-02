@@ -75,5 +75,5 @@ let routeOptimizer = ({ origins = [], destinations = [] } = {}) => {
 };
 
 module.exports = {
-    routeOptimizer: routeOptimizer
+    routeOptimizer
 };
