@@ -10,5 +10,5 @@ services:
     environment:
       MYSQL_DATABASE: tasker
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node

@@ -3,7 +3,7 @@
 const request = require('request-promise');
 const key = require('./secrets')['api-key'];
 
-let getLatLong = ({ countryRegion, adminDistrict, locality, postalCode, addressLine }) => {
+let getLatLong = async ({ countryRegion, adminDistrict, locality, postalCode, addressLine }) => {
 
     let options = {
         uri: 'http://dev.virtualearth.net/REST/v1/Locations',
@@ -18,13 +18,10 @@ let getLatLong = ({ countryRegion, adminDistrict, locality, postalCode, addressL
         json: true
     };
 
-    return request(options)
-      .then((result) => {
-        return result.resourceSets[0].resources[0].point.coordinates;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    let promise = request(options);
+
+    let latLong = await promise;
+    return latLong.resourceSets[0].resources[0].point.coordinates;
 }
 
 module.exports = {

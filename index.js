@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const routesController = require('./controllers/routes');
+const tasksController = require('./controllers/tasks');
 
 const app = express();
 app.use(bodyParser.json());
