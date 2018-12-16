@@ -32,9 +32,18 @@ module.exports = {
           let user_id = req.query.userId;
           let lat = latLong[0];
           let lng = latLong[1];
+          let priority = req.query.priority;
+          let name = req.query.name;
 
-          let query = 'INSERT into tasks (user_id, address, lat, lng) VALUES (?,?,?,?)';
-          return connection.query(query, [user_id, address, lat, lng]);
+          let query;
+
+          if (priority) {
+            query = 'INSERT into tasks (user_id, address, lat, lng, name, priority) VALUES (?,?,?,?,?,?)';
+            return connection.query(query, [user_id, address, lat, lng, name, priority]);
+          } else {
+            query = 'INSERT into tasks (user_id, address, lat, lng, name) VALUES (?,?,?,?,?)';
+            return connection.query(query, [user_id, address, lat, lng, name]);
+          }
         })
         .then((results) => {
           if (results) {
