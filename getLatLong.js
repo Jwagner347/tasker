@@ -22,7 +22,7 @@ let getLatLong = async ({ countryRegion, adminDistrict, locality, postalCode, ad
 
     let latLong = await promise;
     return latLong.resourceSets[0].resources[0].point.coordinates;
-}
+};
 
 module.exports = {
     getLatLong

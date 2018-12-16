@@ -1,7 +1,8 @@
 'use strict';
 
 let mysql = require('promise-mysql');
-let { getLatLong } = require('../getLatLong');
+const { getLatLong } = require('../getLatLong');
+const { getTasksFor } = require('../getTasksFor');
 
 const host = require('../secrets')['host'];
 const port = require('../secrets')['port'];
@@ -52,5 +53,11 @@ module.exports = {
         console.error(err);
         res.status(500).end();
       });
-  }
+  },
+  get: (req, res) => {
+    return getTasksFor(req.params.userId)
+      .then((tasks) => {
+        res.json({ tasks });
+      });
+  },
 }

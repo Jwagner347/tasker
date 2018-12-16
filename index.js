@@ -16,6 +16,10 @@ app.get('/routes/optimized', (req, res) => {
   routesController.optimizedRoutes(req, res);
 });
 
+app.get('/tasks/:userId', (req, res) => {
+  tasksController.get(req, res);
+});
+
 app.post('/tasks/new', (req, res) => {
   tasksController.create(req, res);
 });
